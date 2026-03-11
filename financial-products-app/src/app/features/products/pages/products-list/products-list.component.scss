@@ -2,6 +2,32 @@
   padding: 40px;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.toolbar input {
+  padding: 8px;
+  width: 300px;
+}
+
+.toolbar button {
+  background: #ffd200;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.results {
+  margin-top: 1rem;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+}
+
 .search-container {
   margin-bottom: 20px;
 }

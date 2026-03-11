@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class ProductsListComponent implements OnInit {
 
   private readonly productsService = inject(ProductsService);
+  private readonly router = inject(Router);
 
   // PARA TABLA
   products: Product[] = [];
@@ -53,5 +55,9 @@ export class ProductsListComponent implements OnInit {
       product.name.toLowerCase().includes(term) ||
       product.description.toLowerCase().includes(term)
     );
+  }
+
+  goToCreate(): void {
+    this.router.navigate(['/products/new']);
   }
 }

@@ -13,13 +13,21 @@
   </div>
 
   <div  *ngIf="!loading && !error">
-    <div class="search-container">
-      <input
-        type="text"
-        placeholder="Buscar producto..."
-        [(ngModel)]="searchTerm"
-        (input)="filterProducts()"
-      />
+
+    <div class="toolbar">
+      <div class="left">
+        <input
+          type="text"
+          placeholder="Buscar producto..."
+          [(ngModel)]="searchTerm"
+          (input)="filterProducts()"
+        />
+      </div>
+      <div class="right">
+        <button (click)="goToCreate()">
+          Agregar
+        </button>
+      </div>
     </div>
     
     <table>
@@ -55,6 +63,11 @@
         </tr>
       </tbody>
     </table>
+    
+    <div class="results">
+      {{ filteredProducts.length }} Resultados
+    </div>
+
   </div>
 
 </div>
