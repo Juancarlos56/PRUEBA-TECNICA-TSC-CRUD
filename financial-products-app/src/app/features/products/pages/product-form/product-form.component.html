@@ -1,1 +1,33 @@
-<p>product-form works!</p>
+<div class="form-container">
+
+  <h2>
+    {{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="saveProduct()">
+
+    <label>ID</label>
+    <input formControlName="id">
+
+    <label>Nombre</label>
+    <input formControlName="name">
+
+    <label>Descripción</label>
+    <input formControlName="description">
+
+    <label>Logo</label>
+    <input formControlName="logo">
+
+    <label>Fecha Liberación</label>
+    <input type="date" formControlName="date_release">
+
+    <label>Fecha Revisión</label>
+    <input type="date" formControlName="date_revision">
+
+    <button type="submit">
+      Guardar
+    </button>
+
+  </form>
+
+</div>

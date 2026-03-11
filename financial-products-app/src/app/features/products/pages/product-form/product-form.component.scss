@@ -1,0 +1,21 @@
+.form-container {
+  max-width: 500px;
+  margin: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+button {
+  background: #ffd200;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
