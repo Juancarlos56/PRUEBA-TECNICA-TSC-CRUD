@@ -14,8 +14,21 @@ input {
 }
 
 button {
-  background: #ffd200;
   border: none;
   padding: 10px;
   cursor: pointer;
+}
+
+.error {
+  margin-bottom: 10px;
+}
+
+.error small {
+  color: red;
+}
+
+.buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
 }

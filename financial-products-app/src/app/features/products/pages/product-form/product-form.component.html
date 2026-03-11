@@ -7,27 +7,84 @@
   <form [formGroup]="form" (ngSubmit)="saveProduct()">
 
     <label>ID</label>
-    <input formControlName="id">
+    <input formControlName="id" (blur)="validateId()">
+    
+    <div class="error" *ngIf="form.get('id')?.touched && form.get('id')?.invalid">
+      <small *ngIf="form.get('id')?.errors?.['required']">
+        El ID es obligatorio
+      </small>
+      <small *ngIf="form.get('id')?.errors?.['minlength']">
+        El ID debe tener al menos 3 caracteres
+      </small>
+      <small *ngIf="form.get('id')?.errors?.['maxlength']">
+        El ID debe tener máximo 10 caracteres
+      </small>
+      <small *ngIf="form.get('id')?.errors?.['idExists']">
+        Este ID ya existe
+      </small>
+    </div>
 
     <label>Nombre</label>
     <input formControlName="name">
+    <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      <small *ngIf="form.get('name')?.errors?.['required']">
+        El nombre es obligatorio
+      </small>
+      <small *ngIf="form.get('name')?.errors?.['minlength']">
+        El nombre debe tener mínimo 5 caracteres
+      </small>
+      <small *ngIf="form.get('name')?.errors?.['maxlength']">
+        El nombre debe tener máximo 100 caracteres
+      </small>
+    </div>
 
     <label>Descripción</label>
     <input formControlName="description">
+    <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      <small *ngIf="form.get('description')?.errors?.['required']">
+        La descripción es obligatoria
+      </small>
+      <small *ngIf="form.get('description')?.errors?.['minlength']">
+        La descripción debe tener mínimo 10 caracteres
+      </small>
+      <small *ngIf="form.get('description')?.errors?.['maxlength']">
+        La descripción debe tener máximo 200 caracteres
+      </small>
+    </div>
 
     <label>Logo</label>
     <input formControlName="logo">
+    <div class="error" *ngIf="form.get('logo')?.touched && form.get('logo')?.invalid">
+      <small *ngIf="form.get('logo')?.errors?.['required']">
+        El logo es obligatorio
+      </small>
+    </div>
 
     <label>Fecha Liberación</label>
     <input type="date" formControlName="date_release">
+    <div class="error" *ngIf="form.get('date_release')?.touched && form.get('date_release')?.invalid">
+      <small *ngIf="form.get('date_release')?.errors?.['required']">
+        La fecha de liberación es obligatoria
+      </small>
+    </div>
 
     <label>Fecha Revisión</label>
     <input type="date" formControlName="date_revision">
+    <div class="error" *ngIf="form.get('date_revision')?.touched && form.get('date_revision')?.invalid">
+      <small *ngIf="form.get('date_revision')?.errors?.['required']">
+        La fecha de revisión es obligatoria
+      </small>
+    </div>
 
-    <button type="submit">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button type="button" (click)="cancel()">
+        Cancelar
+      </button>
 
+      <button type="submit" style="background: #ffd200;" [disabled]="form.invalid">
+        Guardar
+      </button>
+    </div>
   </form>
 
 </div>

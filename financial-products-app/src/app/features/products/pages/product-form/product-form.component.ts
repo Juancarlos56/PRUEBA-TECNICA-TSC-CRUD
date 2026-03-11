@@ -30,12 +30,33 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.fb.group({
-      id: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      id: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(10)
+        ]
+      ],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100)
+        ]
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(200)
+        ]
+      ],
       logo: ['', Validators.required],
       date_release: ['', Validators.required],
-      date_revision: ['', Validators.required]
+      date_revision: [{ value: '', disabled: true }]
     });
 
     this.productId = this.route.snapshot.paramMap.get('id')!;
@@ -45,12 +66,37 @@ export class ProductFormComponent implements OnInit {
       this.loadProduct();
     }
 
+    this.form.get('date_release')?.valueChanges.subscribe((date) => {
+      if (!date) return;
+      const releaseDate = new Date(date);
+      const revisionDate = new Date(releaseDate);
+      revisionDate.setFullYear(releaseDate.getFullYear() + 1); //fecha revisión = fecha liberación + 1 año
+
+      this.form.patchValue({
+        date_revision: revisionDate.toISOString().substring(0, 10)
+      });
+
+    });
+
   }
 
   loadProduct(): void {
     this.productsService.getProductById(this.productId)
       .subscribe((product: any) => {
         this.form.patchValue(product);
+      });
+  }
+  
+  validateId(): void {
+    const id = this.form.get('id')?.value;
+
+    if (!id || this.isEditMode) return;
+
+    this.productsService.verifyProductId(id)
+      .subscribe((exists: boolean) => {
+        if (exists) {
+          this.form.get('id')?.setErrors({ idExists: true });
+        }
       });
   }
 
@@ -73,5 +119,9 @@ export class ProductFormComponent implements OnInit {
           this.router.navigate(['/products']);
         });
     }
+  }
+
+  cancel(){
+    this.router.navigate(['/products']);
   }
 }
