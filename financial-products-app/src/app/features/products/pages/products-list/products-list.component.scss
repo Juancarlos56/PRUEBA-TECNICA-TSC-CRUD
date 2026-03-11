@@ -52,3 +52,15 @@ td {
   padding: 10px;
   border-bottom: 1px solid #eee;
 }
+
+.actions button {
+  margin-right: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.actions .delete {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+}

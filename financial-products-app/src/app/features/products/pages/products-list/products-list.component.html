@@ -38,6 +38,7 @@
           <th>Descripción</th>
           <th>Fecha de liberación</th>
           <th>Fecha de revisión</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -59,6 +60,15 @@
           </td>
           <td>
             {{ product.date_revision | date:'dd/MM/yyyy':'UTC'  }}
+          </td>
+          <td class="actions">
+            <button (click)="editProduct(product.id)">
+              Editar
+            </button>
+
+            <button class="delete" (click)="deleteProduct(product.id)">
+              Eliminar
+            </button>
           </td>
         </tr>
       </tbody>

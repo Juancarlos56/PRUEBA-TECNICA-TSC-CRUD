@@ -60,4 +60,20 @@ export class ProductsListComponent implements OnInit {
   goToCreate(): void {
     this.router.navigate(['/products/new']);
   }
+
+  editProduct(id: string): void {
+    this.router.navigate(['/products', id, 'edit']);
+  }
+
+  deleteProduct(id: string): void {
+
+    const confirmDelete = confirm('¿Deseas eliminar este producto?');
+
+    if (!confirmDelete) return;
+    
+    this.productsService.deleteProduct(id).subscribe(() => {
+      this.loadProducts();
+    });
+
+  }
 }
