@@ -1,1 +1,60 @@
-<p>products-list works!</p>
+<div class="products-container">
+
+  <h2>Productos financieros</h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading">
+    Cargando productos...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error">
+    Error cargando productos
+  </div>
+
+  <div  *ngIf="!loading && !error">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Buscar producto..."
+        [(ngModel)]="searchTerm"
+        (input)="filterProducts()"
+      />
+    </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción</th>
+          <th>Fecha de liberación</th>
+          <th>Fecha de revisión</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredProducts">
+          <td>
+            <img
+              [src]="product.logo"
+              width="40"
+            />
+          </td>
+          <td>
+            {{ product.name }}
+          </td>
+          <td>
+            {{ product.description }}
+          </td>
+          <td>
+            {{ product.date_release | date:'dd/MM/yyyy':'UTC' }}
+          </td>
+          <td>
+            {{ product.date_revision | date:'dd/MM/yyyy':'UTC'  }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

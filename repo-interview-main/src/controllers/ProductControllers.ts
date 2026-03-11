@@ -17,7 +17,48 @@ import { ProductInterface } from "../interfaces/product.interface";
 
 @JsonController("/products")
 export class ProductController {
-  products: ProductInterface[] = [];
+  products: ProductInterface[] = [
+    {
+      id: "trj-crd",
+      name: "Tarjeta de Crédito",
+      description: "Tarjeta de consumo bajo la modalidad de crédito",
+      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      date_release: new Date("2023-02-01"),
+      date_revision: new Date("2024-02-01")
+    },
+    {
+      id: "cta-ah",
+      name: "Cuenta de Ahorros",
+      description: "Cuenta bancaria diseñada para guardar dinero y generar intereses.",
+      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      date_release: new Date("2026-03-01"),
+      date_revision: new Date("2026-03-11")
+    },
+    {
+      id: "prest-per",
+      name: "Préstamo Personal",
+      description: "Crédito otorgado a personas para libre inversión.",
+      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      date_release: new Date("2026-03-01"),
+      date_revision: new Date("2026-03-11")
+    },
+    {
+      id: "inv-fond",
+      name: "Fondo de Inversión",
+      description: "Instrumento financiero para invertir en diferentes activos.",
+      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      date_release: new Date("2026-03-01"),
+      date_revision: new Date("2026-03-11")
+    },
+    {
+      id: "seg-vida",
+      name: "Seguro de Vida",
+      description: "Cobertura financiera ante fallecimiento o incapacidad.",
+      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      date_release: new Date("2026-03-01"),
+      date_revision: new Date("2026-03-11")
+    }
+  ];
 
   @Get("")
   getAll() {
