@@ -4,6 +4,7 @@ import { Product } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-products-list',
@@ -23,6 +24,7 @@ export class ProductsListComponent implements OnInit {
   error = false;
 
   // PARA BUSQUEDA 
+  searchSubject = new Subject<string>();
   searchTerm = '';
   filteredProducts: Product[] = [];
 
@@ -30,6 +32,16 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+
+    // rendimiento en llamadas
+    this.searchSubject.pipe(debounceTime(300)).subscribe(term => {
+      const value = term.toLowerCase();
+      this.filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(value) ||
+        product.description.toLowerCase().includes(value)
+      );
+    });
+
   }
 
   loadProducts(): void {
@@ -46,15 +58,6 @@ export class ProductsListComponent implements OnInit {
         this.loading = false;
       }
     });
-  }
-
-  filterProducts(): void {
-    const term = this.searchTerm.toLowerCase();
-    // Filtro pot nombre y descripcion
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(term) ||
-      product.description.toLowerCase().includes(term)
-    );
   }
 
   goToCreate(): void {

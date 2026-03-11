@@ -3,7 +3,7 @@
   <h2>Productos financieros</h2>
 
   <!-- Loading -->
-  <div *ngIf="loading">
+  <div *ngIf="loading" class="loading">
     Cargando productos...
   </div>
 
@@ -20,7 +20,7 @@
           type="text"
           placeholder="Buscar producto..."
           [(ngModel)]="searchTerm"
-          (input)="filterProducts()"
+          (input)="searchSubject.next(searchTerm)"
         />
       </div>
       <div class="right">
