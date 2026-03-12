@@ -5,6 +5,8 @@ import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { ModalService } from '../../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-products-list',
@@ -17,6 +19,7 @@ export class ProductsListComponent implements OnInit {
 
   private readonly productsService = inject(ProductsService);
   private readonly router = inject(Router);
+  private readonly modalService = inject(ModalService);
 
   // PARA TABLA
   products: Product[] = [];
@@ -27,6 +30,17 @@ export class ProductsListComponent implements OnInit {
   searchSubject = new Subject<string>();
   searchTerm = '';
   filteredProducts: Product[] = [];
+
+  // PAGINACION
+  pageSizeOptions = [5, 10, 20];
+  pageSize = 5;
+
+  // MENU
+  openMenuId: string | null = null;
+
+  // MODAL DE ELIMINACION
+  modalVisible = false;
+  productToDelete: string | null = null;
 
   constructor() {}
 
@@ -60,6 +74,15 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
+  toggleMenu(productId: string): void {
+    if (this.openMenuId === productId) {
+      this.openMenuId = null;
+    } else {
+      this.openMenuId = productId;
+    }
+
+  }
+
   goToCreate(): void {
     this.router.navigate(['/products/new']);
   }
@@ -69,14 +92,20 @@ export class ProductsListComponent implements OnInit {
   }
 
   deleteProduct(id: string): void {
-
-    const confirmDelete = confirm('¿Deseas eliminar este producto?');
-
-    if (!confirmDelete) return;
-    
-    this.productsService.deleteProduct(id).subscribe(() => {
-      this.loadProducts();
+    this.modalService.confirm({
+      title: 'Eliminar producto',
+      message: `¿Estas seguro de eliminar el producto?`,
+      confirmText: 'Confirmar',
+      cancelText: 'Cancelar'
+    })
+    .subscribe(result => {
+      if (result) {
+        this.productsService.deleteProduct(id)
+          .subscribe(() => {
+            this.loadProducts();
+          });
+      }
     });
-
   }
+
 }

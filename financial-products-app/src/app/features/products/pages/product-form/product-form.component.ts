@@ -83,8 +83,25 @@ export class ProductFormComponent implements OnInit {
   loadProduct(): void {
     this.productsService.getProductById(this.productId)
       .subscribe((product: any) => {
-        this.form.patchValue(product);
+        const formattedProduct = {
+          ...product,
+          date_release: this.normalizeDate(product.date_release),
+          date_revision: this.normalizeDate(product.date_revision)
+        };
+
+        this.form.patchValue(formattedProduct);
+        this.form.get('id')?.disable();
       });
+  }
+
+  private normalizeDate(date: string): string {
+    if (!date) return '';
+    // si viene ISO con T
+    if (date.includes('T')) {
+      return date.split('T')[0];
+    }
+    // si ya viene YYYY-MM-DD
+    return date;
   }
   
   validateId(): void {
@@ -103,8 +120,16 @@ export class ProductFormComponent implements OnInit {
   saveProduct(): void {
     if (this.form.invalid) return;
 
-    const product = this.form.value;
+    const raw = this.form.getRawValue();
 
+    const product = {
+      ...raw,
+      date_release: new Date(raw.date_release).toISOString().split('T')[0],
+      date_revision: new Date(raw.date_revision).toISOString().split('T')[0]
+    };
+
+    console.log(product);
+    
     if (this.isEditMode) {
 
       this.productsService.updateProduct(this.productId, product)
@@ -113,7 +138,7 @@ export class ProductFormComponent implements OnInit {
         });
 
     } else {
-
+      
       this.productsService.createProduct(product)
         .subscribe(() => {
           this.router.navigate(['/products']);
@@ -123,5 +148,13 @@ export class ProductFormComponent implements OnInit {
 
   cancel(){
     this.router.navigate(['/products']);
+  }
+
+  resetForm(){
+    if (this.isEditMode) {
+      this.loadProduct();
+    } else {
+      this.form.reset();
+    }
   }
 }

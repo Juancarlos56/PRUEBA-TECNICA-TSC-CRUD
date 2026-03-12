@@ -1,7 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { inject } from '@angular/core';
+import { ModalService } from '../../shared/services/modal.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+
+  const modalService = inject(ModalService);
 
   return next(req).pipe(
 
@@ -25,7 +29,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         message = 'Internal server error';
       }
 
-      alert(message);
+      modalService.confirm({
+        title: 'Error',
+        message: message,
+        showCancel: false,
+        confirmText: 'Cerrar'
+      }).subscribe();
 
       return throwError(() => error);
 

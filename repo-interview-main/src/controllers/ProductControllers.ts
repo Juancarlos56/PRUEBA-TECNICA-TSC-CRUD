@@ -54,7 +54,15 @@ export class ProductController {
       id: "seg-vida",
       name: "Seguro de Vida",
       description: "Cobertura financiera ante fallecimiento o incapacidad.",
-      logo: "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+      logo: '',
+      date_release: new Date("2026-03-01"),
+      date_revision: new Date("2026-03-11")
+    },
+    {
+      id: "seg-vida-2",
+      name: "Seguro de Vida 2",
+      description: "Cobertura financiera ante fallecimiento o incapacidad.",
+      logo: '',
       date_release: new Date("2026-03-01"),
       date_revision: new Date("2026-03-11")
     }

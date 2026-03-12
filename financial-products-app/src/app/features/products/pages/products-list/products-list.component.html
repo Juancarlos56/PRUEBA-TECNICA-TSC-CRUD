@@ -1,7 +1,4 @@
 <div class="products-container">
-
-  <h2>Productos financieros</h2>
-
   <!-- Loading -->
   <div *ngIf="loading" class="loading">
     Cargando productos...
@@ -12,70 +9,130 @@
     Error cargando productos
   </div>
 
-  <div  *ngIf="!loading && !error">
+  <div *ngIf="!loading && !error">
 
+    <!-- Toolbar -->
     <div class="toolbar">
       <div class="left">
         <input
           type="text"
-          placeholder="Buscar producto..."
+          placeholder="Buscar..."
           [(ngModel)]="searchTerm"
           (input)="searchSubject.next(searchTerm)"
         />
       </div>
+
       <div class="right">
-        <button (click)="goToCreate()">
+        <button class="btn-add" (click)="goToCreate()">
           Agregar
         </button>
       </div>
-    </div>
-    
-    <table>
-      <thead>
-        <tr>
-          <th>Logo</th>
-          <th>Nombre del producto</th>
-          <th>Descripción</th>
-          <th>Fecha de liberación</th>
-          <th>Fecha de revisión</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of filteredProducts">
-          <td>
-            <img
-              [src]="product.logo"
-              width="40"
-            />
-          </td>
-          <td>
-            {{ product.name }}
-          </td>
-          <td>
-            {{ product.description }}
-          </td>
-          <td>
-            {{ product.date_release | date:'dd/MM/yyyy':'UTC' }}
-          </td>
-          <td>
-            {{ product.date_revision | date:'dd/MM/yyyy':'UTC'  }}
-          </td>
-          <td class="actions">
-            <button (click)="editProduct(product.id)">
-              Editar
-            </button>
 
-            <button class="delete" (click)="deleteProduct(product.id)">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <div class="results">
-      {{ filteredProducts.length }} Resultados
+    </div>
+
+
+    <!-- Table Card -->
+    <div class="table-card">
+      <div class="table-wrapper">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre del producto</th>
+              <th>Descripción</th>
+              <th>Fecha de liberación</th>
+              <th>Fecha de reestructuración</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let product of filteredProducts | slice:0:pageSize">
+
+              <!-- Logo -->
+              <td>
+                <!-- Imagen si existe -->
+                <img
+                  *ngIf="product.logo"
+                  [src]="product.logo"
+                  class="logo-img"
+                />
+
+                <!-- Inicial si no hay imagen -->
+                <div
+                  *ngIf="!product.logo"
+                  class="logo-circle"
+                >
+                  {{ product.name[0] }}
+                </div>
+
+              </td>
+
+              <td class="name">
+                {{ product.name }}
+              </td>
+              <td>
+                {{ product.description }}
+              </td>
+              <td>
+                {{ product.date_release | date:'dd/MM/yyyy':'UTC' }}
+              </td>
+              <td>
+                {{ product.date_revision | date:'dd/MM/yyyy':'UTC' }}
+              </td>
+
+              <!-- Acciones -->
+              <td class="actions">
+
+                <div class="dropdown">
+                  <button
+                    class="dropdown-btn"
+                    (click)="toggleMenu(product.id)"
+                  >
+                    ⋮
+                  </button>
+
+                  <div
+                    class="dropdown-menu"
+                    *ngIf="openMenuId === product.id"
+                  >
+                    <button (click)="editProduct(product.id)">
+                      Editar
+                    </button>
+                    <button
+                      class="delete"
+                      (click)="deleteProduct(product.id)"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Footer -->
+      <div class="table-footer">
+
+        <div class="results">
+          {{ filteredProducts.length }} Resultados
+        </div>
+
+        <div class="page-size">
+          <span style="margin-right: 5px;">Mostrar</span>
+
+          <select [(ngModel)]="pageSize">
+            <option *ngFor="let option of pageSizeOptions" [value]="option">
+              {{ option }}
+            </option>
+          </select>
+
+          <span style="margin-left: 5px;">registros</span>
+        </div>
+
+      </div>
+
     </div>
 
   </div>

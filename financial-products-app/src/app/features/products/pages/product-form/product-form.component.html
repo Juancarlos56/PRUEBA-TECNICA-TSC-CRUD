@@ -1,90 +1,144 @@
-<div class="form-container">
+<div class="form-wrapper">
 
-  <h2>
-    {{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}
-  </h2>
+  <div class="form-card">
 
-  <form [formGroup]="form" (ngSubmit)="saveProduct()">
+    <h2 class="title">
+      Formulario de Registro
+    </h2>
 
-    <label>ID</label>
-    <input formControlName="id" (blur)="validateId()">
+    <div class="divider"></div>
     
-    <div class="error" *ngIf="form.get('id')?.touched && form.get('id')?.invalid">
-      <small *ngIf="form.get('id')?.errors?.['required']">
-        El ID es obligatorio
-      </small>
-      <small *ngIf="form.get('id')?.errors?.['minlength']">
-        El ID debe tener al menos 3 caracteres
-      </small>
-      <small *ngIf="form.get('id')?.errors?.['maxlength']">
-        El ID debe tener máximo 10 caracteres
-      </small>
-      <small *ngIf="form.get('id')?.errors?.['idExists']">
-        Este ID ya existe
-      </small>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="saveProduct()" class="form-grid">
 
-    <label>Nombre</label>
-    <input formControlName="name">
-    <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-      <small *ngIf="form.get('name')?.errors?.['required']">
-        El nombre es obligatorio
-      </small>
-      <small *ngIf="form.get('name')?.errors?.['minlength']">
-        El nombre debe tener mínimo 5 caracteres
-      </small>
-      <small *ngIf="form.get('name')?.errors?.['maxlength']">
-        El nombre debe tener máximo 100 caracteres
-      </small>
-    </div>
+      <!-- ID -->
+      <div class="form-group">
+        <label>ID</label>
 
-    <label>Descripción</label>
-    <input formControlName="description">
-    <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
-      <small *ngIf="form.get('description')?.errors?.['required']">
-        La descripción es obligatoria
-      </small>
-      <small *ngIf="form.get('description')?.errors?.['minlength']">
-        La descripción debe tener mínimo 10 caracteres
-      </small>
-      <small *ngIf="form.get('description')?.errors?.['maxlength']">
-        La descripción debe tener máximo 200 caracteres
-      </small>
-    </div>
+        <input
+          formControlName="id"
+          (blur)="validateId()"
+        >
 
-    <label>Logo</label>
-    <input formControlName="logo">
-    <div class="error" *ngIf="form.get('logo')?.touched && form.get('logo')?.invalid">
-      <small *ngIf="form.get('logo')?.errors?.['required']">
-        El logo es obligatorio
-      </small>
-    </div>
+        <div class="error" *ngIf="form.get('id')?.touched && form.get('id')?.invalid">
+          <small *ngIf="form.get('id')?.errors?.['required']">
+            ID requerido
+          </small>
 
-    <label>Fecha Liberación</label>
-    <input type="date" formControlName="date_release">
-    <div class="error" *ngIf="form.get('date_release')?.touched && form.get('date_release')?.invalid">
-      <small *ngIf="form.get('date_release')?.errors?.['required']">
-        La fecha de liberación es obligatoria
-      </small>
-    </div>
+          <small *ngIf="form.get('id')?.errors?.['minlength']">
+            Mínimo 3 caracteres
+          </small>
 
-    <label>Fecha Revisión</label>
-    <input type="date" formControlName="date_revision">
-    <div class="error" *ngIf="form.get('date_revision')?.touched && form.get('date_revision')?.invalid">
-      <small *ngIf="form.get('date_revision')?.errors?.['required']">
-        La fecha de revisión es obligatoria
-      </small>
-    </div>
+          <small *ngIf="form.get('id')?.errors?.['maxlength']">
+            Máximo 10 caracteres
+          </small>
 
+          <small *ngIf="form.get('id')?.errors?.['idExists']">
+            ID no válido
+          </small>
+        </div>
+      </div>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label>Nombre</label>
+
+        <input formControlName="name">
+
+        <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          <small *ngIf="form.get('name')?.errors?.['required']">
+            Campo requerido
+          </small>
+
+          <small *ngIf="form.get('name')?.errors?.['minlength']">
+            Mínimo 5 caracteres
+          </small>
+        </div>
+      </div>
+
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label>Descripción</label>
+
+        <input formControlName="description">
+
+        <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+          <small *ngIf="form.get('description')?.errors?.['required']">
+            Este campo es requerido
+          </small>
+          <small *ngIf="form.get('description')?.errors?.['minlength']">
+            Mínimo 10 caracteres
+          </small>
+          <small *ngIf="form.get('description')?.errors?.['minlength']">
+            Mínimo 200 caracteres
+          </small>
+        </div>
+      </div>
+
+
+      <!-- Logo -->
+      <div class="form-group">
+        <label>Logo</label>
+
+        <input formControlName="logo">
+
+        <div class="error" *ngIf="form.get('logo')?.touched && form.get('logo')?.invalid">
+          <small>Este campo es requerido</small>
+        </div>
+      </div>
+
+
+      <!-- Fecha liberación -->
+      <div class="form-group">
+        <label>Fecha Liberación</label>
+
+        <input
+          type="date"
+          formControlName="date_release"
+        >
+      </div>
+
+      <!-- Fecha revisión -->
+      <div class="form-group">
+        <label>Fecha Revisión</label>
+        <input
+          type="date"
+          formControlName="date_revision"
+        >
+      </div>
+
+    </form>
+
+    <!-- Botones -->
     <div class="buttons">
+
       <button type="button" (click)="cancel()">
         Cancelar
       </button>
 
-      <button type="submit" style="background: #ffd200;" [disabled]="form.invalid">
-        Guardar
+      <button
+        type="button"
+        class="btn-reset"
+        (click)="resetForm()"
+      >
+        Reiniciar
       </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="form.invalid"
+        (click)="saveProduct()"
+      >
+        Enviar
+      </button>
+
     </div>
-  </form>
+
+  </div>
 
 </div>
+
+
+<pre>{{ form.value | json }}</pre>
+<pre>{{ form.status }}</pre>
